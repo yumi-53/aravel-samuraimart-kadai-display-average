@@ -22,33 +22,33 @@
                 <hr>
             </div>
             @auth
-            <form method="POST" class="m-3 align-items-end">
-                @csrf
-                <input type="hidden" name="id" value="{{$product->id}}">
-                <input type="hidden" name="name" value="{{$product->name}}">
-                <input type="hidden" name="price" value="{{$product->price}}">
-                <div class="form-group row">
-                    <label for="quantity" class="col-sm-2 col-form-label">数量</label>
-                    <div class="col-sm-10">
-                        <input type="number" id="quantity" name="qty" min="1" value="1" class="form-control w-25">
+                <form method="post" class="m-3 align-items-end">
+                    @csrf
+                    <input type="hidden" name="id" value="{{$product->id}}">
+                    <input type="hidden" name="name" value="{{$product->name}}">
+                    <input type="hidden" name="price" value="{{$product->price}}">
+                    <div class="form-group row">
+                        <label for="quantity" class="col-sm-2 col-form-label">数量</label>
+                        <div class="col-sm-10">
+                            <input type="number" id="quantity" name="qty" min="1" value="1" class="form-control w-25">
+                        </div>
                     </div>
-                </div>
-                <input type="hidden" name="weight" value="0">
-                <div class="row">
-                    <div class="col-7">
-                        <button type="submit" class="btn samuraimart-submit-button w-100">
-                            <i class="fas fa-shopping-cart"></i>
-                            カートに追加
-                        </button>
+                    <input type="hidden" name="weight" value="0">
+                    <div class="row">
+                        <div class="col-7">
+                            <button type="submit" class="btn samuraimart-submit-button w-100">
+                                <i class="fas fa-shopping-cart"></i>
+                                カートに追加
+                            </button>
+                        </div>
+                        <div class="col-5">
+                            <a href="/products/{{ $product->id }}/favorite" class="btn samuraimart-favorite-button text-dark w-100">
+                                <i class="fa fa-heart"></i>
+                                お気に入り
+                            </a>
+                        </div>
                     </div>
-                    <div class="col-5">
-                        <a href="/products/{{ $product->id }}/favorite" class="btn samuraimart-favorite-button text-dark w-100">
-                            <i class="fa fa-heart"></i>
-                            お気に入り
-                        </a>
-                    </div>
-                </div>
-            </form>
+                </form>
             @endauth
         </div>
 
@@ -58,7 +58,37 @@
         </div>
 
         <div class="offset-1 col-10">
-            <!-- レビューを実装する箇所になります -->
+            <div class="row">
+                @foreach($reviews as $review)
+                    <div class="offset-md-5 col-md-5">
+                        <p class="h3">{{$review->title}}</p>
+                        <p class="h3">{{$review->content}}</p>
+                        <label>{{$review->created_at}} {{$review->user->name}}</label>
+                    </div>
+                @endforeach
+            </div><br>
+
+            @auth
+                <div class="row">
+                    <div class="offset-md-5 col-md-5">
+                        <form method="post" action="{{ route('reviews.store') }}">
+                            @csrf
+                            <h4>タイトル</h4>
+                            @error('title')
+                                <strong>タイトルを入力してください</strong>
+                            @enderror
+                            <input type="text" name="title" class="form-control m-2">
+                            <h4>レビュー内容</h4>
+                            @error('content')
+                                <strong>レビュー内容を入力してください</strong>
+                            @enderror
+                            <textarea name="content" class="form-control m-2"></textarea>
+                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                            <button type="submit" class="btn samuraimart-submit-button ml-2">レビューを追加</button>
+                        </form>
+                    </div>
+                </div>
+            @endauth
         </div>
     </div>
 </div>
