@@ -13,6 +13,6 @@ class WebController extends Controller
 
         $major_category_names = Category::pluck('major_category_name')->unique();
 
-        return view('erb.index',compact('major_category_names', 'categories'));
+        return view('web.index',compact('major_category_names', 'categories'));
     }
 }
