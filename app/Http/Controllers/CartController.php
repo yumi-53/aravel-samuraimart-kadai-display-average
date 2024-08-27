@@ -46,12 +46,12 @@ class CartController extends Controller
                 'price' => $request->price,
                 'weight' => $request->weight,
                 'options' => [
-                    'image' => $request->image,
-                    'carriage' => $request->carriage,
+                'image' => $request->image,
+                'carriage' => $request->carriage,
                 ]
             ]
             );
 
-            return to_route('products.show', $request->get('id'));
+            return to_route('carts.index');
     }
 }
