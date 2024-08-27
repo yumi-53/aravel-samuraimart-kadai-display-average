@@ -31,4 +31,11 @@ class Product extends Model
     public function favorited_users() {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
+    public function averageRating() {
+        $averageScore = $this->reviews()->avg('score');
+        $roundedAverage = round(($averageScore * 2) / 2, 1);
+
+        return $roundedAverage;
+    }
 }
