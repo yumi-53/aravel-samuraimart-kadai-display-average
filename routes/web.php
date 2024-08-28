@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('products', ProductController::class);
 
     Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
-    Route::get('reviews', [WebControlReviewControllerler::class, 'average_review'])->name('reviews.average_review');;
+    // Route::get('reviews', [ReviewController::class, 'average_review'])->name('reviews.average_review');;
 
     Route::post('favorites/{product_id}', [FavoriteController::class, 'store'])->name('favorites.store');
     Route::delete('favorites/{product_id}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
